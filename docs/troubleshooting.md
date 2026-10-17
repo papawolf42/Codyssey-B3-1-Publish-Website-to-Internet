@@ -282,3 +282,28 @@ Paid 업그레이드 단계 완료로 기록하되 고급 기능 활성화, 서�
 재발방지 보완: 비동기 설정 오류가 나타나면 현재 프로젝트/조직의 실제 완료 상태와 성공 알림을 확인한 뒤 재시도한다. 오래 열린 활성화 폼의 오류만으로 롤백이나 실패를 가정하지 않는다. **TS-001의 서울 작업·별도 최소권한 콘솔 접근은 여전히 별도 검증이 남아 있다.**
 
 ![최종 고급 기능 활성화 성공](captures/0050-aws-advanced-activation-complete.png)
+
+
+## TS-001 검증 추가: 서울 EC2 조회를 실제로 SCP가 거부
+
+실습 계정 Sunrise Sprint(067518846638)의 AccountFullAccessRole로 서울(ap-northeast-2) EC2 인스턴스 목록을 사용자가 열었다. 화면에서 `ec2:DescribeInstances`에 대한 HTTP 403과 `explicit deny in a service control policy`를 확인했다. 오류가 지목한 정책은 `p-l9spe88l`로, 앞서 읽은 AdvancedModeRegionRestrictionSecurityControlPolicy와 일치한다. 따라서 이번 서울 조회 실패의 직접 차단 정책이 확인됐다.
+
+인스턴스가 없어서 거부된 것이 아니다. 목록 조회 자체가 실패했으므로 이 화면으로 인스턴스가 0개임을 검증할 수 없다. 실행 중 필터가 적용된 목록이며 새 리소스 생성은 하지 않았다. 콘솔 표시 설정에는 서울을 추가한 것을 확인했지만 SCP 수정 저장이나 해제는 수행하지 않았다. 다음 검증은 승인된 정책 변경 후 동일 계정·역할·리전에서 같은 조회를 재시도하는 것이다.
+
+![서울 EC2 DescribeInstances에 대한 명시적 SCP 거부](captures/0053-aws-seoul-ec2-describe-instances-scp-denied.png)
+
+
+## TS-001 조치: 서울 리전 예외 추가 저장 확인
+
+사용자가 관리 계정에서 SCP p-l9spe88l을 수정·저장했다. AWS의 정책 업데이트 성공 알림과 RegionFloor의 ap-northeast-2 추가를 확인했다. 변경 전후 JSON 구조 비교에서 서울 항목 추가 외 변경이 없음을 확인했다. 원본과 저장본은 policies/advanced-region-restriction-before-seoul.json 및 policies/advanced-region-restriction-after-seoul.json에 보관했다. Root에 연결된 정책이므로 다른 멤버 계정에도 서울 제한 완화가 적용된다. 실제 조회 성공은 아직 미검증이며, 다음 단계는 Sunrise Sprint의 같은 역할·서울 리전에서 DescribeInstances 재조회다.
+
+![정책 저장 성공](captures/0054-aws-scp-seoul-saved.png)
+
+
+## TS-001 검증 결과: 동일 실습 계정·역할·서울 리전에서 목록 조회 성공
+
+SCP 서울 예외 추가 저장 후 사용자가 Sunrise Sprint(067518846638)의 AccountFullAccessRole 세션으로 돌아왔다. 현재 리전은 ap-northeast-2이며 실행 중 인스턴스 필터가 적용된 동일 목록 화면이다. 이전의 명시적 SCP 거부 오류가 사라지고 `일치하는 인스턴스를 찾을 수 없음`이 정상 결과로 표시됐다. 변경 전 403과 변경 후 정상 빈 목록을 비교해 **해당 역할의 서울 EC2 목록 조회 차단이 해소됨**을 확인했다.
+
+이는 실행 중 필터에 맞는 인스턴스가 없다는 뜻이며, 모든 상태의 인스턴스가 0개라고 단정하지 않는다. 인스턴스 생성·기타 API 및 forB3-1 최소권한 사용자/별도 Role 접근은 아직 검증하지 않았다. 관리자 역할의 조회 성공을 최소권한 설계 검증 완료로 해석하지 않는다.
+
+![변경 후 서울 EC2 정상 빈 목록](captures/0055-aws-seoul-ec2-query-success.png)
