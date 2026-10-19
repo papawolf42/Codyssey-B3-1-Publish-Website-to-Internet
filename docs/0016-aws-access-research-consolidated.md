@@ -17,7 +17,7 @@
 - [앞선 공식 문서 조사](0015-iam-console-access-research.md)
 - [실제 화면과 생성 과정](0013-iam-user-creation-walkthrough.md)
 - [실습 권한 설계](0014-iam-policy-design.md)
-- [과제 명세](../instruction.md)
+- [과제 명세](0051-requirements-and-review-reference.md)
 
 **현재 새 계정 생성, 유료 전환, 고급 기능 활성화, 액세스 키 생성, 기존 관리자 역할 변경은 실행하지 않았다.** 전환을 결정한 문서가 아니라 사실·정정·남은 검증을 기록한 문서다.
 

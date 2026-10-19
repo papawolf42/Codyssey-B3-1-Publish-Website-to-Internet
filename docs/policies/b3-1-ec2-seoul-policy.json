@@ -2,6 +2,18 @@
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Sid": "B3BrowserSshSingleInstance",
+      "Effect": "Allow",
+      "Action": "ec2-instance-connect:SendSSHPublicKey",
+      "Resource": "arn:aws:ec2:ap-northeast-2:067518846638:instance/i-05d34639a30bbfb6a",
+      "Condition": {
+        "StringEquals": {
+          "ec2:osuser": "ec2-user",
+          "aws:RequestedRegion": "ap-northeast-2"
+        }
+      }
+    },
+    {
       "Sid": "B3ReadSeoul",
       "Effect": "Allow",
       "Action": [
@@ -17,7 +29,9 @@
         "ec2:DescribeInstances",
         "ec2:DescribeInstanceStatus",
         "ec2:DescribeVolumes",
-        "ec2:DescribeNetworkInterfaces"
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:DescribeAddresses",
+        "ec2:DescribeSecurityGroupRules"
       ],
       "Resource": "*",
       "Condition": {

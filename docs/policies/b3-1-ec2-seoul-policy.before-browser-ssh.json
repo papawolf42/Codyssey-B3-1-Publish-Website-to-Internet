@@ -1,0 +1,171 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "B3ReadSeoul",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeVpcs",
+        "ec2:DescribeSubnets",
+        "ec2:DescribeInternetGateways",
+        "ec2:DescribeRouteTables",
+        "ec2:DescribeSecurityGroups",
+        "ec2:DescribeAvailabilityZones",
+        "ec2:DescribeImages",
+        "ec2:DescribeInstanceTypes",
+        "ec2:DescribeKeyPairs",
+        "ec2:DescribeInstances",
+        "ec2:DescribeInstanceStatus",
+        "ec2:DescribeVolumes",
+        "ec2:DescribeNetworkInterfaces"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "ap-northeast-2"
+        }
+      }
+    },
+    {
+      "Sid": "B3NetworkSetup",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateVpc",
+        "ec2:CreateSubnet",
+        "ec2:CreateInternetGateway",
+        "ec2:AttachInternetGateway",
+        "ec2:CreateRouteTable",
+        "ec2:AssociateRouteTable",
+        "ec2:CreateRoute",
+        "ec2:CreateSecurityGroup",
+        "ec2:AuthorizeSecurityGroupIngress"
+      ],
+      "Resource": [
+        "arn:aws:ec2:ap-northeast-2:067518846638:vpc/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:subnet/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:internet-gateway/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:route-table/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:security-group/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:security-group-rule/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "ap-northeast-2"
+        }
+      }
+    },
+    {
+      "Sid": "B3NetworkCleanup",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DeleteSecurityGroup",
+        "ec2:DeleteRoute",
+        "ec2:DisassociateRouteTable",
+        "ec2:DeleteRouteTable",
+        "ec2:DetachInternetGateway",
+        "ec2:DeleteInternetGateway",
+        "ec2:DeleteSubnet",
+        "ec2:DeleteVpc"
+      ],
+      "Resource": [
+        "arn:aws:ec2:ap-northeast-2:067518846638:vpc/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:subnet/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:internet-gateway/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:route-table/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:security-group/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "ap-northeast-2"
+        }
+      }
+    },
+    {
+      "Sid": "B3SshKeyLifecycle",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateKeyPair",
+        "ec2:DeleteKeyPair"
+      ],
+      "Resource": [
+        "arn:aws:ec2:ap-northeast-2:067518846638:key-pair/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "ap-northeast-2"
+        }
+      }
+    },
+    {
+      "Sid": "B3LaunchInstance",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:RunInstances"
+      ],
+      "Resource": [
+        "arn:aws:ec2:ap-northeast-2::image/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:instance/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:network-interface/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:security-group/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:subnet/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:volume/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:key-pair/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "ap-northeast-2"
+        }
+      }
+    },
+    {
+      "Sid": "B3ComputeCleanup",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:TerminateInstances",
+        "ec2:DeleteVolume"
+      ],
+      "Resource": [
+        "arn:aws:ec2:ap-northeast-2:067518846638:instance/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:volume/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "ap-northeast-2"
+        }
+      }
+    },
+    {
+      "Sid": "B3ResourceLabels",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:CreateTags"
+      ],
+      "Resource": [
+        "arn:aws:ec2:ap-northeast-2:067518846638:vpc/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:subnet/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:internet-gateway/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:route-table/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:security-group/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:security-group-rule/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:instance/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:volume/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:network-interface/*",
+        "arn:aws:ec2:ap-northeast-2:067518846638:key-pair/*"
+      ],
+      "Condition": {
+        "StringEquals": {
+          "aws:RequestedRegion": "ap-northeast-2"
+        },
+        "ForAllValues:StringEquals": {
+          "aws:TagKeys": [
+            "Name",
+            "Project"
+          ]
+        },
+        "Null": {
+          "aws:TagKeys": "false"
+        }
+      }
+    }
+  ]
+}

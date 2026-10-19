@@ -6,7 +6,7 @@
 
 - AWS 입력용 JSON: [b3-1-ec2-seoul-policy.json](policies/b3-1-ec2-seoul-policy.json)
 - 학습용 주석본: [b3-1-ec2-seoul-policy.annotated.jsonc](policies/b3-1-ec2-seoul-policy.annotated.jsonc) — 36개 작업 각각의 옆에 명세 항목·문구 및 요구 구현/방식 선택/콘솔 조회/조건부 정리 구분을 기록했다. JSONC는 주석이 있는 설명용 파일이므로 AWS에는 주석 없는 JSON을 사용한다. 주석 제거 후 원본 정책과 일치하는지 검사했다.
-- 요구사항 원문: [instruction.md](../instruction.md)
+- 요구사항 원문: [instruction.md](0051-requirements-and-review-reference.md)
 - 화면 조작 기록: [0013. IAM 사용자 생성 과정](0013-iam-user-creation-walkthrough.md)
 - 권장 정책 이름: `B3Ec2SeoulLabPolicy` (아직 AWS에 등록하지 않음)
 
@@ -184,7 +184,7 @@ AMI와 서브넷 ID가 확정되면 해당 ARN을 정확한 ID로 좁힐 수 있
 
 ## 8. 참고 자료
 
-- [프로젝트 공식 요구사항 정리](../instruction.md)
+- [프로젝트 공식 요구사항 정리](0051-requirements-and-review-reference.md)
 - [AWS: EC2 작업·리소스·조건 키](https://docs.aws.amazon.com/service-authorization/latest/reference/list_ec2.html) — 2026-10-17 작업 이름과 주요 리소스 지원 유형 확인. 과거 list_amazonec2.html 주소는 확인 시 인덱스로 이동하여 현재 list_ec2.html을 사용했다.
 - [AWS: VPC와 IAM의 관계](https://docs.aws.amazon.com/vpc/latest/userguide/security_iam_service-with-iam.html)
 - [AWS: EC2 권한표와 RunInstances의 다중 리소스 평가 설명](https://aws.amazon.com/blogs/security/can-i-do-that-with-policy-understanding-the-aws-service-authorization-reference/)

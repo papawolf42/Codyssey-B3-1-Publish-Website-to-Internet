@@ -143,4 +143,4 @@ https://docs.aws.amazon.com/signin/latest/userguide/introduction-to-iam-user-sig
 관련 자료:
 - [IAM 정책 설계](0014-iam-policy-design.md)
 - [화면 관찰 및 실제 생성 기록](0013-iam-user-creation-walkthrough.md)
-- [과제 명세](../instruction.md)
+- [과제 명세](0051-requirements-and-review-reference.md)

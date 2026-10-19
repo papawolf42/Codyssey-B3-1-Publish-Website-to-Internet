@@ -1,10 +1,12 @@
 # B3-1 트러블슈팅 보고서
 
+> **기록 시점 안내:** 각 사례는 증상부터 후속 결과까지 시간순으로 보존한다. 접근 복구와 로컬 SSH·Nginx 검증은 후속 성공했고 브라우저 SSH·known_hosts 경고는 해결을 보장하지 않는다. 정리 단계의 추가 조회 권한은 [0049](0049-cleanup-iam-read-permissions.md), 현재 자원 상태는 [정리 체크리스트](cleanup-checklist.md)를 따른다.
+
 ## TS-001. IAM 사용자는 생성됐지만 콘솔 로그인 설정이 없음
 
 - 관찰일: 2026-10-17 (한국 시간)
 - 상태: **원인 조사 완료, 해결 조치 및 결과 검증 미완료**
-- 관련 요구사항: [instruction.md](../instruction.md) §4 IAM 최소권한, §7 별도 IAM 사용자/Role 콘솔 접근 및 서울 리전
+- 관련 요구사항: [instruction.md](0051-requirements-and-review-reference.md) §4 IAM 최소권한, §7 별도 IAM 사용자/Role 콘솔 접근 및 서울 리전
 - 관련 환경: Sunrise Sprint 프로젝트, AWS Settings 기반 관리 화면, 무료 플랜
 
 ## 1. 증상
@@ -333,3 +335,172 @@ SCP 서울 예외 추가 저장 후 사용자가 Sunrise Sprint(067518846638)의
 ## TS-003 후속 결정: 권한 보완을 필수 단계로 취급하지 않음
 
 과제 명세에는 NAT Gateway 생성 및 Network ACL 직접 수정 요구가 없다. 사용자는 추가 조회 권한을 부여하지 않고 필수 서브넷·IGW·라우팅 구성을 계속하기로 했다. 따라서 위 조회 권한 보완은 검토한 선택지이지 실행된 조치가 아니다. 오류는 미해결·보완 보류이며, 필수 과제 작업이 실제로 막히거나 추가 검증이 필요할 때 해당 API의 최소 범위를 재검토한다. VPC 생성 성공은 별도로 확인했고 중복 생성하지 않았다.
+
+
+# TS-004. IAM 암호 분실과 계정·로그인 경로 혼동으로 인한 실습 접근 복구
+
+관찰 기간: 2026-10-18~19(한국 시간). 상세 원본: [IAM 로그인·복구 기록](0018-iam-console-login-and-mfa.md#19-재로그인-인증-실패-및-비밀번호-복구-검토).
+
+## 1. 증상과 영향
+
+- forB3-1 재로그인에서 Authentication failed가 표시되었고 사용자가 암호를 잊었을 가능성을 알렸다.
+- 관리자 재접속 과정에서 다른 루트 계정의 콘솔로 들어가 IAM 사용자가 보이지 않았다.
+- 관리계정에 들어온 뒤에도 그 계정의 IAM 목록에는 실습 계정 사용자가 없었다.
+- 중앙 루트 액세스 관리에는 액세스 거부됨이 표시되었다.
+- 정확한 조직 포털 로그인 이후에도 표준 계정 탭에는 AWS 계정 0개가 표시되었다.
+- 이 과정에서 실습 계정·IAM 사용자·자원이 삭제되었다는 증거는 확인되지 않았다. 다른 계정의 빈 목록은 삭제 증거가 아니다.
+
+## 2. 원리: 네 가지를 분리해야 한다
+
+### AWS 계정: 리소스와 IAM 사용자가 들어 있는 별도 공간
+
+관리계정 487825334249와 실습 멤버계정 Sunrise Sprint(067518846638)는 같은 조직이지만 서로 다른 AWS 계정이다. forB3-1과 실습 VPC·보안 그룹은 실습 계정 안에 있다. 조직 관리계정의 IAM 목록이 멤버계정의 사용자까지 합쳐 보여주지는 않는다. 이름·이메일만이 아니라 12자리 계정 ID로 위치를 확인한다.
+
+### 루트 로그인: 특정 AWS 계정의 최상위 신원
+
+관리계정 root로 로그인했다고 실습 계정의 IAM 관리 화면으로 자동 전환되는 것은 아니다. 조직의 관리 권한과 다른 계정의 콘솔 세션은 구분해야 한다. 멤버계정에 등록된 이메일을 루트 로그인에 입력했다는 사실만으로 실습 계정에 접근했다고 판단하지 않는다. 실제 관찰된 한 로그인 결과는 별도 계정 769533384379였다. 인증 입력부터 세션 선택까지 모든 사용자 조작을 관찰하지 않아 그 결과의 내부 원인은 단정하지 않는다.
+
+### Builder ID와 중앙 사용자: 기존 프로젝트에 들어가기 위한 인증
+
+us-east-1의 기존 IAM Identity Center 설정에서 소스·인증 방법 AWS Builder ID와 인스턴스 ssoins-7223f7b2e2c53070를 확인했다. 이 ID는 원래 프로젝트 경로와 일치했다. 기존 중앙 사용자 ID 74b8f4a8-b0d1-707f-7e20-d333fe265f89는 과거 실습 관리자 역할의 세션명과도 일치했다. 같은 이메일을 사용하더라도 Builder ID 로그인과 AWS 계정 root 로그인은 같은 로그인 방식이 아니다.
+
+### IAM 사용자와 역할: 실제 실습 권한을 사용하는 신원
+
+중앙 사용자로 인증한 뒤 기존 할당에 따라 실습 계정의 managed/AccountFullAccessRole을 사용하면 해당 계정의 관리자 세션으로 들어간다. 그 세션에서 실습 계정 안의 IAM 사용자 forB3-1을 관리할 수 있다. forB3-1은 별도의 콘솔 암호와 MFA로 로그인하는 과제용 최소권한 사용자다. Builder ID 암호·루트 암호·IAM 사용자 암호를 같은 것으로 취급하지 않는다.
+
+## 3. 핵심 진단 근거
+
+1. **계정 ID 불일치**: 별도 root 로그인 계정들과 관리계정은 실습 계정 067518846638와 ID가 달랐다.
+2. **중앙 루트 세션 제한**: 거부 버튼의 상세 문구가 `RootSession may not be assumed by root accounts`였다. ‘root면 모든 복구 기능을 실행할 수 있다’는 가정은 틀렸으며, 이 제한을 풀기 위한 새 권한 부여는 하지 않았다.
+3. **기존 Identity Center의 리전**: 서울에서 초기 안내가 보였어도 기존 구성은 us-east-1에 있었다. 기존 인스턴스가 없다고 판단해 새로 활성화하지 않았다.
+4. **실제 인증 설정**: 기존 인스턴스·중앙 사용자·역할 세션명의 일치를 확인해 올바른 경로를 식별했다.
+5. **표준 계정 탭과 account access 앱의 차이**: 표준 포털 계정 목록은 새로 고침해도 0개였으나, 애플리케이션 탭의 AWS account access에 들어가니 실습 계정과 기존 역할이 있었다. 앱 자체가 계정 액세스 관리자를 통한 할당과 Identity Center 권한 세트를 통한 할당을 구분한다고 안내했다. 따라서 표준 계정 탭 0개는 모든 계정 접근 권한이 없다는 뜻이 아니었다.
+
+## 4. 실제 해결 경로
+
+```text
+기존 조직 포털
+  → AWS Builder ID로 인증
+  → 애플리케이션 탭
+  → AWS account access
+  → Sunrise Sprint [067518846638]
+  → managed/AccountFullAccessRole
+  → 실습 계정 IAM의 forB3-1
+  → 보안 자격 증명 → 콘솔 액세스 관리
+  → 암호 재설정 → 사용자 지정 암호
+```
+
+검증된 기존 포털: https://ssoins-7223f7b2e2c53070.us-east-1.portal.amazonaws.com
+
+검증된 account access 앱: https://aa-qgrz8p6ih.account-access.us-east-1.app.aws/
+
+사용자가 새 IAM 콘솔 암호를 직접 입력하고 재설정했다. 권한 확장, 새 관리자 생성, 조직·SCP 변경, MFA 삭제 없이 기존 관리자 접근을 재사용했다. 재설정 창의 기본 선택인 콘솔 액세스 비활성화는 실행하지 않았다.
+
+## 5. 결과와 검증 범위
+
+- **확인 완료**: 실습 계정 관리자 세션 복구, forB3-1 존재, 기존 MFA 1개 유지.
+- **확인 완료**: ‘콘솔 액세스가 업데이트되었습니다’, ‘사용자의 새 암호를 활성화했습니다’ 및 암호 업데이트 시각 2026-10-19 03:45 GMT+9.
+- **아직 미검증**: 새 암호+MFA로 forB3-1 재로그인 성공, 복구 이후 실습 리소스의 현재 상태 재조회.
+- 최초 Authentication failed만으로 암호 오류를 유일 원인으로 확정하지 않는다. 사용자의 암호 분실 가능성에 따라 재설정했으며 초기 인증 실패의 세부 원인은 확인되지 않았다.
+
+![기존 관리자 접근 및 IAM 사용자 존재 확인](captures/0123-iam-user-admin-access-recovered.png)
+![암호를 노출하지 않은 재설정 성공 알림](captures/0124-iam-password-reset-success.png)
+
+## 6. 조사 중 잘못된 판단과 교정
+
+- **가입 인증 메일 = 올바른 기존 계정**으로 단정할 수 없다. 이메일 확인 요청은 가입 완료·프로젝트 연결을 보장하지 않는다. 이후 신규 가입 이름 입력 화면이 나타나 그 흐름은 중단했다.
+- **계정 등록 이메일 = 그 이메일의 루트 로그인으로 해당 프로젝트에 진입**이라는 보장은 확인되지 않았다. 최종 계정 ID와 세션 유형을 확인해야 한다.
+- **IAM Identity Center 미활성 안내 = 기존 조직 인스턴스 없음**으로 해석하면 안 된다. 기존 구성 리전을 확인해야 한다.
+- **계정 0개 = 계정 삭제**가 아니다. 이 구성은 별도의 account access 애플리케이션을 사용했다.
+- 보이지 않는 작업 탭을 사용자 화면에 표시했다고 보고한 혼선이 있었다. 이후 사용자 원래 탭의 URL을 실제로 전환하고 새 snapshot으로 확인했다.
+
+## 7. 재발 방지
+
+- 기존 포털과 account access 앱의 복구 경로를 문서·북마크에 보관한다.
+- 매 작업 전 계정 ID 067518846638와 신원 forB3-1 또는 의도한 관리자 역할을 확인한다.
+- Builder ID/계정 root/IAM 사용자 로그인 정보를 비밀번호 관리자에서 명확히 구분한다. 비밀 값은 학습 문서·캡처·Git에 넣지 않는다.
+- 복구 후에는 관리자 세션을 보존한 채 새 IAM 암호와 MFA 로그인을 검증하고, 실습은 최소권한 사용자로 재개한다.
+
+
+## 후속 검증: 새 IAM 암호 재로그인 완료
+
+사용자가 새 암호와 MFA 로그인 절차 완료를 보고한 뒤 콘솔 홈을 직접 확인했다. 로그인 신원은 forB3-1 @ papawolf-b3-1, 계정 ID 067518846638, 리전 서울(ap-northeast-2)이다. 새 암호로 재로그인하는 최종 검증이 완료되었으므로 앞선 절의 재로그인 미검증 상태는 당시 기록으로만 해석한다. 암호와 MFA 코드는 읽거나 기록하지 않았다. 홈의 Health·비용 위젯 조회 권한 부족은 로그인 실패와 별개이며 이를 이유로 권한을 확장하지 않는다. 다음은 이 최소권한 사용자로 서울 EC2 생성 단계에 진입하는 것이다.
+
+![새 IAM 암호 재로그인 후 실습 계정·사용자·서울 확인](captures/0130-iam-password-reset-relogin-verified.png)
+
+
+# TS-005. Windows SSH가 개인키 파일 권한 때문에 인증을 거부함
+
+## 증상
+
+사용자 클립보드 캡처에서 Downloads의 b3-1-key.pem에 Test-Path가 True를 반환한 뒤 ec2-user로 SSH를 시도했다. 서버 호스트 지문 확인에 사용자가 yes를 입력했고 known_hosts 등록 안내가 표시되었다. 이후 Bad permissions, WARNING: UNPROTECTED PRIVATE KEY FILE!, Permissions are too open, This private key will be ignored, Load key bad permissions 및 Permission denied(publickey,...)가 출력됐다.
+
+![개인키 권한 과다로 SSH가 키 사용을 거부](captures/0148-ssh-private-key-permissions-error.png)
+
+## 가설·검증
+
+현재 확인된 직접 원인은 로컬 개인키 파일 ACL에 다른 보안 주체의 접근 권한이 남아 OpenSSH가 키를 사용하지 않은 것이다. 사용자 이름이나 키가 서버와 불일치한다고 단정하지 않는다. 서버 호스트 응답을 받았으므로 이번 시도는 단순한 TCP 연결 시간 초과가 아니다. 키 파일 존재와 SSH 클라이언트 실행도 확인됐다. 다만 화면의 호스트 지문은 AWS 시스템 로그 등 별도 신뢰 경로와 대조하지 않아 서버 신원 대조 완료로 기록하지 않는다.
+
+## 조치 안내·검증 계획
+
+개인키 내용은 열지 않고 정확히 해당 파일 하나의 ACL만 조정한다. 상속을 끄고 기존 접근 규칙을 제거한 뒤 현재 Windows 사용자에게 읽기 권한을 부여하는 PowerShell 절차를 안내한다. Downloads 전체·상위 디렉터리·서버 보안 그룹·IAM 권한은 변경하지 않는다. 사용자 실행 후 Set-Acl 오류 유무와 동일 SSH 명령 결과를 확인한다. 현재는 해결 전이며 SSH 접속 성공을 주장하지 않는다.
+
+## 재발 방지
+
+개인키는 Git 밖의 본인 전용 위치에 보관하고 다운로드·이동·동기화 후 파일 ACL이 넓어지지 않았는지 확인한다. chmod를 Windows PowerShell에 무조건 적용하거나 Everyone 읽기 권한을 주어 우회하지 않는다. 개인키를 재생성하거나 인스턴스를 중복 생성하기 전에 오류 문구에서 로컬 키 읽기 문제와 원격 인증 문제를 구분한다.
+
+
+## TS-005 후속: 개인키 ACL 수정 후 SSH 로그인 성공
+
+사용자 최신 캡처에서 제안한 단일 개인키 ACL 변경과 SSH 재시도 뒤 Amazon Linux 2023 배너 및 ec2-user@ip-10-0-1-200 프롬프트를 확인했다. 로컬 개인키 권한 때문에 키를 사용하지 않던 문제는 해결되었고 이번 SSH 인증·로그인 성공을 확인했다. 서버의 Nginx 설치·HTTP 응답은 아직 검증 전이다.
+
+![개인키 ACL 수정 후 SSH 성공, 별도 known_hosts 경고 존재](captures/0149-ssh-login-success-known-hosts-warning.png)
+
+# TS-006. SSH는 성공했으나 Windows known_hosts 갱신 권한 경고
+
+## 증상과 현재 판단
+
+같은 캡처에 로컬 .ssh 디렉터리 열람의 UnauthorizedAccessException과 SSH의 hostfile_replace_entries: mkstemp: Permission denied, update_known_hosts 실패가 보인다. 뒤이어 원격 셸이 열렸으므로 개인키 인증 실패와 구분한다. 해당 로컬 경로의 쓰기·접근 권한이 부족해 호스트 키 저장 파일 갱신을 못 하는 상황으로 판단하되 ACL 실제 항목은 아직 조회하지 않았다.
+
+## 조치와 결과
+
+현재는 미해결이다. 진행 중인 SSH 연결을 끊거나 로컬 .ssh 전체 권한을 무작정 바꾸지 않는다. Nginx 기본 배포 후 로컬 PowerShell에서 .ssh 및 known_hosts의 소유자·ACL을 별도로 확인하고 최소 범위로 수정한다. StrictHostKeyChecking 비활성화, known_hosts 전체 삭제, Everyone 권한 부여로 우회하지 않는다. 서버 호스트 지문의 별도 신뢰 경로 대조도 아직 완료하지 않았다.
+
+2026-10-19에 SSH 재접속과 localhost 일반 GET 200은 확인했으나, known_hosts 권한 경고는 해결하지 않았다. 원리·다른 오류와의 구분·읽기 전용 확인 방법은 [known_hosts Permission denied 쉬운 설명](0042-ssh-known-hosts-permission-denied-쉬운설명.md)에 정리했다. 권한 변경은 수행하지 않았다.
+
+
+# TS-007. EC2 브라우저 SSH의 SendSSHPublicKey 단계 실패
+
+> **후속 결과:** IAM 변경 저장과 v2/v3 기본 버전은 확인했으나 브라우저 SSH 성공은 미검증이다. 최종 웹 검증은 로컬 OpenSSH로 수행했고 이후 EC2는 종료했다. 아래 ‘승인 전·미수행’ 및 정책에 권한이 없다는 설명은 초기 관찰 시점이다. 당시 정책 사본은 [변경 전 JSON](policies/b3-1-ec2-seoul-policy.before-browser-ssh.json), 상세 후속은 [브라우저 SSH 기록](0028-browser-ssh-troubleshooting.md)에 있다.
+
+## 증상
+
+실습 사용자 forB3-1로 퍼블릭 IPv4·ec2-user를 사용해 EC2 Instance Connect 브라우저 연결을 시도했다. 화면에 ‘인스턴스에 연결하지 못했습니다 / SendSSHPublicKey가 실패했습니다. 나중에 다시 시도하세요’가 표시된다. 대상은 i-05d34639a30bbfb6a이며 기존 PowerShell의 개인키 SSH는 성공한 상태다.
+
+![브라우저 SSH 임시 공개키 전송 실패](captures/0151-ec2-instance-connect-send-key-failed.png)
+
+## 가설·근거와 미확인 범위
+
+- 로컬 보관 정책 b3-1-ec2-seoul-policy.json에는 ec2-instance-connect:SendSSHPublicKey가 없다. 공식 문서는 브라우저 연결에 이 작업의 허용을 요구한다. 따라서 IAM 권한 부족이 우선 가설이다. 다만 현재 연결 정책 최신 버전·SCP·실제 API 상세 오류는 재확인 전이므로 일반 실패 문구만으로 유일 원인을 확정하지 않는다.
+- 기존 SSH 인바운드는 개인 공인 IPv4 /32만 허용한다. 공식 문서에 따르면 브라우저 SSH 트래픽은 EC2 Instance Connect 서비스에서 출발하므로 서울 서비스 접두사 목록을 허용해야 한다. 이 네트워크 조건도 현재 브라우저 경로에 충족되지 않은 것으로 판단한다. 단, 그것이 현재 SendSSHPublicKey API 실패 문구를 직접 일으켰다고 단정하지 않는다. API 권한과 SSH 네트워크 경로는 별도 단계다.
+- 연결 준비 화면의 ec2:DescribeAddresses 조회 권한 경고도 관찰됐지만, 이것을 SendSSHPublicKey 실패와 같은 API 오류로 혼동하지 않는다.
+
+## 사용자 승인 후 검토할 최소 변경안
+
+1. 관리자 역할로 현재 연결 정책을 확인한 뒤 필요 시 forB3-1에 SendSSHPublicKey를 실습 인스턴스 ARN 하나, ec2-user 조건, 서울 범위로 제한해 허용한다. 인스턴스 IAM 프로파일에 줄 권한이 아니라 브라우저로 접속하는 사용자 신원에 줄 권한이다. AdministratorAccess·전체 인스턴스 접근을 주지 않는다.
+2. 실습 보안 그룹에 SSH TCP 22의 추가 소스를 AWS 관리형 접두사 목록 com.amazonaws.ap-northeast-2.ec2-instance-connect로 한정한다. 실제 목록 ID는 콘솔에서 조회한 뒤 사용하며 추측하지 않는다. 기존 개인 IP /32 규칙은 유지하고 0.0.0.0/0 SSH를 열지 않는다.
+3. DescribeAddresses 등 콘솔 조회 경고는 실제 필요 API를 확인해 서울 범위의 최소 읽기 권한으로 별도 검토한다. 다른 불필요한 조회 작업을 일괄 추가하지 않는다.
+4. 같은 사용자·인스턴스·OS 사용자로 재접속해 터미널 프롬프트를 확인하고 추가한 임시 접근 규칙의 유지·회수 계획을 문서화한다.
+
+## 현재 결과와 재발 방지
+
+미해결·승인 전이다. IAM·보안 그룹·SSM·인스턴스 연결 엔드포인트는 변경하지 않았다. 기존 PowerShell SSH를 예비 경로로 유지한다. 브라우저 접속은 로컬 키 SSH와 동일한 인증·출발 IP를 쓰는 것이 아니므로 화면 캡처 편의만으로 설정 없이 전환할 수 있다고 가정하지 않는다.
+
+공식 근거:
+- https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-connect-configure-IAM-role.html
+- https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-connect-prerequisites.html
+
+
+## TS-007 증빙 기록 연결
+
+사용자 요청으로 관리자 경로의 누락 캡처를 보완하고 [브라우저 SSH 실패·해결 과정 증빙 기록](0028-browser-ssh-troubleshooting.md)을 분리 작성했다. 기존 실패 0151에 이어 현재 세션 메뉴 0152, 계정 접근 앱 0153, 실습 관리자 역할 선택 직전 0154를 실제 화면에서 캡처했다. 최종 해결 완료 전까지 관리자 진입·현재 정책 확인·최소 변경 저장·브라우저 재접속·결과 검증을 해당 문서에 순차 추가한다. 현재는 역할 선택 직전이며 실제 변경은 미수행이다.
