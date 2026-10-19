@@ -1,0 +1,66 @@
+[submodule "web-deployments/bangahee/B3-1"]
+	path = references/web-deployments/bangahee/B3-1
+	url = https://github.com/bangahee/B3-1.git
+[submodule "web-deployments/bangahee/B6-1"]
+	path = references/web-deployments/bangahee/B6-1
+	url = https://github.com/bangahee/B6-1.git
+[submodule "web-deployments/bllancck/B3-1.aws-infra-base"]
+	path = references/web-deployments/bllancck/B3-1.aws-infra-base
+	url = https://github.com/bllancck/B3-1.aws-infra-base.git
+[submodule "web-deployments/bllancck/B6-1.sql-db-design"]
+	path = references/web-deployments/bllancck/B6-1.sql-db-design
+	url = https://github.com/bllancck/B6-1.sql-db-design.git
+[submodule "web-deployments/CMS-SUDO7/CODY-B3-1"]
+	path = references/web-deployments/CMS-SUDO7/CODY-B3-1
+	url = https://github.com/CMS-SUDO7/CODY-B3-1.git
+[submodule "web-deployments/CMS-SUDO7/CODY-B6-1"]
+	path = references/web-deployments/CMS-SUDO7/CODY-B6-1
+	url = https://github.com/CMS-SUDO7/CODY-B6-1.git
+[submodule "web-deployments/giyeop-cody/B3-1"]
+	path = references/web-deployments/giyeop-cody/B3-1
+	url = https://github.com/giyeop-cody/B3-1.git
+[submodule "web-deployments/giyeop-cody/B6-1"]
+	path = references/web-deployments/giyeop-cody/B6-1
+	url = https://github.com/giyeop-cody/B6-1.git
+[submodule "web-deployments/jha21vvv/codyssey_b3-01"]
+	path = references/web-deployments/jha21vvv/codyssey_b3-01
+	url = https://github.com/jha21vvv/codyssey_b3-01.git
+[submodule "web-deployments/ji-min0/b6-1"]
+	path = references/web-deployments/ji-min0/b6-1
+	url = https://github.com/ji-min0/b6-1.git
+[submodule "web-deployments/kimch0612/Codyssey_B3-1"]
+	path = references/web-deployments/kimch0612/Codyssey_B3-1
+	url = https://github.com/kimch0612/Codyssey_B3-1.git
+[submodule "web-deployments/kjs83036/AI-SW-Basic-B3-1"]
+	path = references/web-deployments/kjs83036/AI-SW-Basic-B3-1
+	url = https://github.com/kjs83036/AI-SW-Basic-B3-1.git
+[submodule "web-deployments/kjs83036/AI-SW-Basic-B6-1"]
+	path = references/web-deployments/kjs83036/AI-SW-Basic-B6-1
+	url = https://github.com/kjs83036/AI-SW-Basic-B6-1.git
+[submodule "web-deployments/mackerel07/B6-1"]
+	path = references/web-deployments/mackerel07/B6-1
+	url = https://github.com/mackerel07/B6-1.git
+[submodule "web-deployments/segretoo/codyssey-b3-1"]
+	path = references/web-deployments/segretoo/codyssey-b3-1
+	url = https://github.com/segretoo/codyssey-b3-1.git
+[submodule "web-deployments/segretoo/codyssey-b6-1"]
+	path = references/web-deployments/segretoo/codyssey-b6-1
+	url = https://github.com/segretoo/codyssey-b6-1.git
+[submodule "web-deployments/shannonlee-dev/secure-cloud-service-infra"]
+	path = references/web-deployments/shannonlee-dev/secure-cloud-service-infra
+	url = https://github.com/shannonlee-dev/secure-cloud-service-infra.git
+[submodule "web-deployments/star-candy/B3-1_mini_redis_codyssey"]
+	path = references/web-deployments/star-candy/B3-1_mini_redis_codyssey
+	url = https://github.com/star-candy/B3-1_mini_redis_codyssey.git
+[submodule "web-deployments/star-candy/B6-1_aws_codyssey"]
+	path = references/web-deployments/star-candy/B6-1_aws_codyssey
+	url = https://github.com/star-candy/B6-1_aws_codyssey.git
+[submodule "web-deployments/VectorSophie/codyssey-b3-1"]
+	path = references/web-deployments/VectorSophie/codyssey-b3-1
+	url = https://github.com/VectorSophie/codyssey-b3-1.git
+[submodule "web-deployments/VectorSophie/codyssey-b6-1"]
+	path = references/web-deployments/VectorSophie/codyssey-b6-1
+	url = https://github.com/VectorSophie/codyssey-b6-1.git
+[submodule "web-deployments/yun-lim/b6-1"]
+	path = references/web-deployments/yun-lim/b6-1
+	url = https://github.com/yun-lim/b6-1.git

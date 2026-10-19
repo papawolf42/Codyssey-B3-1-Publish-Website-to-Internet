@@ -1,0 +1,191 @@
+{
+  "course_identification": {
+    "question_no": 185015,
+    "question_evidence": "Local peer-review text repeatedly mentions AWS, EC2, Nginx, VPC; official current course repo labels the internet deployment task B6-1. User notes historical renumbering and prior B3-1 title.",
+    "current_official_task": "B6-1 — 클라우드 환경에서 웹 서비스 인프라 구축",
+    "historical_title_match": "내가 만든 웹사이트를 인터넷에 올려 누구나 쓰게 하기"
+  },
+  "accounts_scanned": 44,
+  "profile_errors": [],
+  "public_repositories_seen": 1382,
+  "matched_public_repositories": 22,
+  "repositories": [
+    {
+      "repo": "bangahee/B3-1",
+      "name": "B3-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\bangahee\\B3-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "bangahee/B6-1",
+      "name": "B6-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\bangahee\\B6-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "bllancck/B3-1.aws-infra-base",
+      "name": "B3-1.aws-infra-base",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\bllancck\\B3-1.aws-infra-base",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "bllancck/B6-1.sql-db-design",
+      "name": "B6-1.sql-db-design",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\bllancck\\B6-1.sql-db-design",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "CMS-SUDO7/CODY-B3-1",
+      "name": "CODY-B3-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\CMS-SUDO7\\CODY-B3-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "CMS-SUDO7/CODY-B6-1",
+      "name": "CODY-B6-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\CMS-SUDO7\\CODY-B6-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "giyeop-cody/B3-1",
+      "name": "B3-1",
+      "description": "Mini Redis를 구현해보는 프로젝트",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\giyeop-cody\\B3-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "giyeop-cody/B6-1",
+      "name": "B6-1",
+      "description": "내가 만든 웹사이트를 인터넷에 올려 누구나 쓰게 하기 | 클라우드와 AI API | AI/SW 기초",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\giyeop-cody\\B6-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "jha21vvv/codyssey_b3-01",
+      "name": "codyssey_b3-01",
+      "description": "내가 만든 웹사이트를 인터넷에 올려 누구나 쓰게 하기",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\jha21vvv\\codyssey_b3-01",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "ji-min0/b6-1",
+      "name": "b6-1",
+      "description": "sql",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\ji-min0\\b6-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "kimch0612/Codyssey_B3-1",
+      "name": "Codyssey_B3-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\kimch0612\\Codyssey_B3-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "kjs83036/AI-SW-Basic-B3-1",
+      "name": "AI-SW-Basic-B3-1",
+      "description": "Mini Redis 구축",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\kjs83036\\AI-SW-Basic-B3-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "kjs83036/AI-SW-Basic-B6-1",
+      "name": "AI-SW-Basic-B6-1",
+      "description": "클라우드 환경에서 웹 서비스 인프라 구축",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\kjs83036\\AI-SW-Basic-B6-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "mackerel07/B6-1",
+      "name": "B6-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\mackerel07\\B6-1",
+      "status": "cloned_no_checkout_windows_invalid_path",
+      "detail": "Remote fetched and refs/heads/main verified; checkout omitted because the repository contains a colon in a filename, invalid on Windows."
+    },
+    {
+      "repo": "segretoo/codyssey-b3-1",
+      "name": "codyssey-b3-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\segretoo\\codyssey-b3-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "segretoo/codyssey-b6-1",
+      "name": "codyssey-b6-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\segretoo\\codyssey-b6-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "shannonlee-dev/secure-cloud-service-infra",
+      "name": "secure-cloud-service-infra",
+      "description": "AWS VPC·EC2 웹 서비스의 수동 구성과 보안·운영 검증 기록. SSH 접근 제한, DNS·HTTPS, Docker와 리소스 정리 절차를 다룹니다.",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\shannonlee-dev\\secure-cloud-service-infra",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "star-candy/B3-1_mini_redis_codyssey",
+      "name": "B3-1_mini_redis_codyssey",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\star-candy\\B3-1_mini_redis_codyssey",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "star-candy/B6-1_aws_codyssey",
+      "name": "B6-1_aws_codyssey",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\star-candy\\B6-1_aws_codyssey",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "VectorSophie/codyssey-b3-1",
+      "name": "codyssey-b3-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\VectorSophie\\codyssey-b3-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "VectorSophie/codyssey-b6-1",
+      "name": "codyssey-b6-1",
+      "description": "",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\VectorSophie\\codyssey-b6-1",
+      "status": "cloned",
+      "detail": ""
+    },
+    {
+      "repo": "yun-lim/b6-1",
+      "name": "b6-1",
+      "description": "Codyssey B6-1: VPC public subnet, EC2 Nginx, evidence and cleanup",
+      "path": "C:\\Users\\alsgu\\Dev\\Codyssey\\discordyssey\\cloned-web-deployment-repositories\\yun-lim\\b6-1",
+      "status": "cloned",
+      "detail": ""
+    }
+  ],
+  "matching_rule": "All public profile repositories named B3-1 or B6-1, plus title/description matches for the identified web deployment task."
+}

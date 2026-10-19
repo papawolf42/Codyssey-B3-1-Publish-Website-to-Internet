@@ -1,0 +1,254 @@
+{
+  "format_version": 1,
+  "source_collection": "cloned-web-deployment-repositories",
+  "imported_at": "2026-10-19T15:40:13.4815979+09:00",
+  "registration": "git-submodule",
+  "local_uncommitted_changes_copied": false,
+  "repositories": [
+    {
+      "owner": "bangahee",
+      "repository": "B3-1",
+      "source_relative_path": "bangahee/B3-1",
+      "path": "references/web-deployments/bangahee/B3-1",
+      "url": "https://github.com/bangahee/B3-1.git",
+      "commit": "1e0a7cf6b4552693ce553d0bc3add994ef543e43",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "bangahee",
+      "repository": "B6-1",
+      "source_relative_path": "bangahee/B6-1",
+      "path": "references/web-deployments/bangahee/B6-1",
+      "url": "https://github.com/bangahee/B6-1.git",
+      "commit": "77ca76c24a1277c2b7dbcc555e6cbea711cbef44",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "bllancck",
+      "repository": "B3-1.aws-infra-base",
+      "source_relative_path": "bllancck/B3-1.aws-infra-base",
+      "path": "references/web-deployments/bllancck/B3-1.aws-infra-base",
+      "url": "https://github.com/bllancck/B3-1.aws-infra-base.git",
+      "commit": "4568eb07e4a1bbc33dd9ef92138da098fbd563c5",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "bllancck",
+      "repository": "B6-1.sql-db-design",
+      "source_relative_path": "bllancck/B6-1.sql-db-design",
+      "path": "references/web-deployments/bllancck/B6-1.sql-db-design",
+      "url": "https://github.com/bllancck/B6-1.sql-db-design.git",
+      "commit": "87aa38e5c6de7679a636914ae1872ce66e769c49",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "CMS-SUDO7",
+      "repository": "CODY-B3-1",
+      "source_relative_path": "CMS-SUDO7/CODY-B3-1",
+      "path": "references/web-deployments/CMS-SUDO7/CODY-B3-1",
+      "url": "https://github.com/CMS-SUDO7/CODY-B3-1.git",
+      "commit": "d460bbca525ed382040f14791404f6e665829ef7",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "CMS-SUDO7",
+      "repository": "CODY-B6-1",
+      "source_relative_path": "CMS-SUDO7/CODY-B6-1",
+      "path": "references/web-deployments/CMS-SUDO7/CODY-B6-1",
+      "url": "https://github.com/CMS-SUDO7/CODY-B6-1.git",
+      "commit": "eb5626310c14afebdb6fcd0f9ef23256d407f975",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "giyeop-cody",
+      "repository": "B3-1",
+      "source_relative_path": "giyeop-cody/B3-1",
+      "path": "references/web-deployments/giyeop-cody/B3-1",
+      "url": "https://github.com/giyeop-cody/B3-1.git",
+      "commit": "64680c1edcd6d6fa6942c0013db660be35ef41d3",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "giyeop-cody",
+      "repository": "B6-1",
+      "source_relative_path": "giyeop-cody/B6-1",
+      "path": "references/web-deployments/giyeop-cody/B6-1",
+      "url": "https://github.com/giyeop-cody/B6-1.git",
+      "commit": "019538f9d9ddbbac086f40d64b9d90bdc3c289ef",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "jha21vvv",
+      "repository": "codyssey_b3-01",
+      "source_relative_path": "jha21vvv/codyssey_b3-01",
+      "path": "references/web-deployments/jha21vvv/codyssey_b3-01",
+      "url": "https://github.com/jha21vvv/codyssey_b3-01.git",
+      "commit": "b22c13d84aab8298820b3a955550eb4242b95527",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "ji-min0",
+      "repository": "b6-1",
+      "source_relative_path": "ji-min0/b6-1",
+      "path": "references/web-deployments/ji-min0/b6-1",
+      "url": "https://github.com/ji-min0/b6-1.git",
+      "commit": "aab1cd9eac74f59aa921df40f631682089d96964",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "kimch0612",
+      "repository": "Codyssey_B3-1",
+      "source_relative_path": "kimch0612/Codyssey_B3-1",
+      "path": "references/web-deployments/kimch0612/Codyssey_B3-1",
+      "url": "https://github.com/kimch0612/Codyssey_B3-1.git",
+      "commit": "e4f452e48f82c435b8a79791819c4d4576d74d77",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "kjs83036",
+      "repository": "AI-SW-Basic-B3-1",
+      "source_relative_path": "kjs83036/AI-SW-Basic-B3-1",
+      "path": "references/web-deployments/kjs83036/AI-SW-Basic-B3-1",
+      "url": "https://github.com/kjs83036/AI-SW-Basic-B3-1.git",
+      "commit": "ada2d713a36255a8d86e0185692afcfb6bffa796",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "kjs83036",
+      "repository": "AI-SW-Basic-B6-1",
+      "source_relative_path": "kjs83036/AI-SW-Basic-B6-1",
+      "path": "references/web-deployments/kjs83036/AI-SW-Basic-B6-1",
+      "url": "https://github.com/kjs83036/AI-SW-Basic-B6-1.git",
+      "commit": "3e884500ab9a507e9eadf98f9e25b7f116522614",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "mackerel07",
+      "repository": "B6-1",
+      "source_relative_path": "mackerel07/B6-1",
+      "path": "references/web-deployments/mackerel07/B6-1",
+      "url": "https://github.com/mackerel07/B6-1.git",
+      "commit": "a0770b13bc9df37e2810e8d758934a408c66b648",
+      "source_dirty_entries": 14,
+      "windows_sparse_excluded_paths": [
+        "미션 - AI:SW 기초 (AI:SW Basic).pdf"
+      ],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "segretoo",
+      "repository": "codyssey-b3-1",
+      "source_relative_path": "segretoo/codyssey-b3-1",
+      "path": "references/web-deployments/segretoo/codyssey-b3-1",
+      "url": "https://github.com/segretoo/codyssey-b3-1.git",
+      "commit": "fe7e4265f9ae1036e09ab992f0f10f231db2449c",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "segretoo",
+      "repository": "codyssey-b6-1",
+      "source_relative_path": "segretoo/codyssey-b6-1",
+      "path": "references/web-deployments/segretoo/codyssey-b6-1",
+      "url": "https://github.com/segretoo/codyssey-b6-1.git",
+      "commit": "a60f810939920f1d3fe9ac02550360cf8c4d0a2f",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "shannonlee-dev",
+      "repository": "secure-cloud-service-infra",
+      "source_relative_path": "shannonlee-dev/secure-cloud-service-infra",
+      "path": "references/web-deployments/shannonlee-dev/secure-cloud-service-infra",
+      "url": "https://github.com/shannonlee-dev/secure-cloud-service-infra.git",
+      "commit": "771ba013bd050fe3c3e6e03a2283134295a2932e",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "star-candy",
+      "repository": "B3-1_mini_redis_codyssey",
+      "source_relative_path": "star-candy/B3-1_mini_redis_codyssey",
+      "path": "references/web-deployments/star-candy/B3-1_mini_redis_codyssey",
+      "url": "https://github.com/star-candy/B3-1_mini_redis_codyssey.git",
+      "commit": "dd69114f5d6dce1793ee8b8d8569900db9f36a47",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "star-candy",
+      "repository": "B6-1_aws_codyssey",
+      "source_relative_path": "star-candy/B6-1_aws_codyssey",
+      "path": "references/web-deployments/star-candy/B6-1_aws_codyssey",
+      "url": "https://github.com/star-candy/B6-1_aws_codyssey.git",
+      "commit": "1d37ee1fcea6d352e0311b68e46701bb826c1688",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "VectorSophie",
+      "repository": "codyssey-b3-1",
+      "source_relative_path": "VectorSophie/codyssey-b3-1",
+      "path": "references/web-deployments/VectorSophie/codyssey-b3-1",
+      "url": "https://github.com/VectorSophie/codyssey-b3-1.git",
+      "commit": "cf6b36c87d256aac4158e74c019b519b06f053c1",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "VectorSophie",
+      "repository": "codyssey-b6-1",
+      "source_relative_path": "VectorSophie/codyssey-b6-1",
+      "path": "references/web-deployments/VectorSophie/codyssey-b6-1",
+      "url": "https://github.com/VectorSophie/codyssey-b6-1.git",
+      "commit": "f770fca25302856461fa89497f288d472ae37c53",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    },
+    {
+      "owner": "yun-lim",
+      "repository": "b6-1",
+      "source_relative_path": "yun-lim/b6-1",
+      "path": "references/web-deployments/yun-lim/b6-1",
+      "url": "https://github.com/yun-lim/b6-1.git",
+      "commit": "e4398965e35355e9705cf96c801c797f39d2b067",
+      "source_dirty_entries": 0,
+      "windows_sparse_excluded_paths": [],
+      "remote_commit_fetch_verified": true
+    }
+  ],
+  "remote_checked_at": "2026-10-19T15:40:32.5378434+09:00"
+}
