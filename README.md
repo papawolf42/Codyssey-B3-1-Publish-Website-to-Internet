@@ -32,3 +32,16 @@
 ![외부 브라우저 정상 응답](docs/captures/0193-nginx-external-http-success.png)
 
 검증 당시 인스턴스는 `i-05d34639a30bbfb6a`입니다. `/health` 방식 B를 함께 구현했다고 주장하지 않습니다.
+
+## 필수 제출물
+
+1. [아키텍처 PNG](docs/architecture.png)와 [구성·검증 설명](docs/verification.md)
+2. 이 README의 외부 접속 방식 A와 결과 화면
+3. [트러블슈팅 보고서](docs/troubleshooting.md): 개인키 ACL 오류 → 검증 → 최소 조치 → SSH 성공 → 재발 방지
+4. [리소스 정리 체크리스트](docs/cleanup-checklist.md): EC2·EBS·EIP·IGW·VPC와 연결 자원의 실제 결과
+
+## 검증 후 원본 리소스 정리
+
+2026-10-19에 원본 EC2의 Terminated 상태와 EBS·EIP 없음, 실습 SG·Subnet·IGW·VPC 및 기본 라우팅 테이블 부재를 확인했습니다. 기본 VPC는 보존했습니다. 정리 기록의 대상은 위 원본 인스턴스이며 이후 평가용 복원과 구분합니다.
+
+[정리 결과와 항목별 캡처](docs/cleanup-checklist.md)
