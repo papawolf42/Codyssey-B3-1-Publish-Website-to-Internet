@@ -1,37 +1,57 @@
-# 트러블슈팅: Windows SSH 개인키 권한 오류
+# 트러블슈팅: IAM 비밀번호 분실과 로그인 경로 혼동
 
-## 1. 증상
+## 1. 증상과 영향
 
-개인키 파일이 존재했지만 SSH에서 `WARNING: UNPROTECTED PRIVATE KEY FILE!`, `Permissions are too open`, `This private key will be ignored`, `Permission denied (publickey,...)`가 발생했습니다.
+실습용 IAM 사용자 `forB3-1`로 다시 로그인할 때 **Authentication failed**가 표시됐고, 비밀번호를 잊었을 가능성을 확인했습니다. 복구 과정에서도 서로 다른 AWS 계정과 로그인 주체가 혼동돼 실습 사용자·기존 자원을 찾기 어려웠습니다.
 
-![키 파일 권한 오류](captures/0148-ssh-private-key-permissions-error.png)
+표준 접근 포털에는 **AWS 계정 0개**가 표시돼, 기존 관리자 접근까지 잃은 것처럼 보였습니다. 비밀번호·MFA 코드가 보일 수 있는 인증 입력 화면은 저장하지 않고 오류 문구만 기록했습니다.
+
+![표준 포털에 계정 0개 표시](captures/0127-portal-accounts-zero.png)
 
 ## 2. 원인 가설
 
-서버 연결 전에 Windows OpenSSH가 로컬 개인키의 과도한 접근 권한을 이유로 키 사용을 거부했을 가능성을 확인했습니다. 키가 서버와 불일치한다거나 보안 그룹이 잘못됐다고 먼저 단정하지 않았습니다.
+1. **IAM 콘솔 비밀번호 분실**: 새 암호를 설정해야 할 수 있습니다. 단, Authentication failed라는 일반 문구만으로 비밀번호 오류를 유일 원인으로 단정하지 않았습니다.
+2. **계정·로그인 방식 혼동**: 같은 이메일이나 비슷한 이름이어도 AWS 계정, Builder ID, IAM 사용자, 관리 역할은 다른 신원입니다. 다른 계정에서 사용자가 보이지 않는 것을 삭제로 해석하면 안 됩니다.
+3. **포털 접근 경로 차이**: 표준 계정 탭이 비어 있어도 별도 애플리케이션에 기존 접근 권한이 남아 있을 수 있습니다.
 
 ## 3. 검증
 
-- 개인키 파일 존재와 OpenSSH 실행을 확인했습니다.
-- 서버 호스트 응답 후 키 읽기 권한 경고가 발생한 순서를 확인했습니다.
-- 오류가 인터넷 연결 시간 초과가 아니라 로컬 개인키 사용 거부임을 구분했습니다.
+- 이름만 보지 않고 실습 계정 ID **067518846638**과 사용자 **forB3-1**을 기준으로 확인했습니다.
+- 기존 프로젝트의 Builder ID·IAM Identity Center 연결과 기존 관리 역할 접근 경로를 확인했습니다.
+- 같은 포털의 **애플리케이션 → AWS account access**에는 실습 계정과 기존 `managed/AccountFullAccessRole`이 있었습니다. 따라서 계정 탭의 0개는 계정 삭제 증거가 아니었습니다.
+- 해당 역할로 실습 계정 IAM을 열어 **forB3-1이 존재하고 기존 MFA도 유지됨**을 확인했습니다. 사용자나 자원을 새로 만들 필요가 없었습니다.
+
+[기존 account access 애플리케이션](captures/0128-portal-account-access-application.png) · [실습 계정의 기존 관리 역할](captures/0129-account-access-lab-admin-role.png)
+
+![관리 접근 복구 후 IAM 사용자·MFA 확인](captures/0123-iam-user-admin-access-recovered.png)
 
 ## 4. 실제 조치
 
-개인키 내용을 열거나 재발급하지 않고 **해당 파일 하나의 Windows ACL만** 조정했습니다. 상속된 접근을 정리하고 현재 사용자에게 필요한 읽기 권한을 부여한 뒤 같은 사용자·키·대상으로 SSH를 다시 시도했습니다. Downloads 전체나 서버 SG·IAM을 넓혀 우회하지 않았습니다.
+다음의 기존 경로를 재사용했습니다.
+
+```text
+기존 조직 포털 → Builder ID 인증 → 애플리케이션
+→ AWS account access → 실습 계정 Sunrise Sprint
+→ managed/AccountFullAccessRole → IAM의 forB3-1
+→ 보안 자격 증명 → 콘솔 액세스 관리 → 암호 재설정
+```
+
+콘솔 액세스를 비활성화하지 않고 **암호 재설정·사용자 지정 암호**를 선택했습니다. 새 비밀번호 입력과 최종 저장은 사용자가 직접 수행했습니다. 기존 MFA를 삭제하거나 실습 사용자에 관리자 정책을 새로 붙이지 않았고, 새 관리자·새 계정 생성으로 우회하지 않았습니다.
 
 ## 5. 결과
 
-Amazon Linux 2023 배너와 `ec2-user` 원격 셸 프롬프트가 표시돼 **SSH 로그인 성공**을 확인했습니다. 이후 같은 서버에서 Nginx와 localhost GET 200도 검증했습니다.
+- 콘솔의 **콘솔 액세스가 업데이트되었습니다** 성공 알림과 새 암호 활성화를 확인했습니다.
+- 사용자 보고에 따라 새 암호·MFA 로그인을 마친 뒤, 콘솔 홈에서 **forB3-1 / 실습 계정 / 서울 리전**을 직접 확인했습니다.
+- 암호 재설정 완료와 실제 재로그인 성공을 별도 단계로 검증한 뒤 최소권한 사용자로 EC2 실습을 재개했습니다.
 
-![ACL 수정 후 SSH 성공](captures/0149-ssh-login-success-known-hosts-warning.png)
+[비밀번호를 노출하지 않은 재설정 성공 알림](captures/0124-iam-password-reset-success.png)
 
-[후속 localhost GET 200](captures/0202-nginx-localhost-get-200.png)
-
-성공 화면의 `known_hosts` 갱신 권한 경고는 별도 문제입니다. SSH 인증 성공과 구분하며, 이 보고서의 개인키 ACL 해결을 그 경고까지 해결한 것으로 표현하지 않습니다.
+![새 암호로 재로그인 후 실습 사용자·계정·서울 확인](captures/0130-iam-password-reset-relogin-verified.png)
 
 ## 6. 재발 방지
 
-- 개인키는 Git 밖의 본인 전용 위치에 보관하고 복사·이동 후 ACL을 확인합니다.
-- 파일 존재, 키 읽기 권한, 원격 인증, 네트워크 연결을 오류 순서대로 구분합니다.
-- Everyone 읽기 권한·SSH 전체 공개·호스트 키 검사 비활성화로 우회하지 않습니다.
+- Builder ID·관리 역할·IAM 사용자의 로그인 경로와 비밀번호를 구분해 안전하게 보관합니다.
+- 매 작업 전 계정 ID·신원·리전을 확인하고, 계정 목록 0개를 자원 삭제로 단정하지 않습니다.
+- 기존 관리자 접근 경로를 보관하고, 암호 재설정 뒤에는 관리 세션을 유지한 채 새 암호·MFA 로그인을 검증합니다.
+- 권한 있는 관리 역할은 해당 IAM 사용자의 접근 복구에 사용하고, 실습은 별도 최소권한 사용자로 이어갑니다.
+- 비밀번호·MFA 코드·인증 링크는 문서·캡처·Git에 남기지 않습니다.

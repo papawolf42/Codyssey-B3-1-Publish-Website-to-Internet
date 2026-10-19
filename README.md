@@ -37,7 +37,7 @@
 
 1. [아키텍처 PNG](docs/architecture.png)와 [구성·검증 설명](docs/verification.md)
 2. 이 README의 외부 접속 방식 A와 결과 화면
-3. [트러블슈팅 보고서](docs/troubleshooting.md): 개인키 ACL 오류 → 검증 → 최소 조치 → SSH 성공 → 재발 방지
+3. [트러블슈팅 보고서](docs/troubleshooting.md): IAM 비밀번호 분실·로그인 경로 혼동 → 기존 관리 접근 복구 → 암호 재설정 → MFA 재로그인 성공
 4. [리소스 정리 체크리스트](docs/cleanup-checklist.md): EC2·EBS·EIP·IGW·VPC와 연결 자원의 실제 결과
 
 ## 검증 후 원본 리소스 정리
