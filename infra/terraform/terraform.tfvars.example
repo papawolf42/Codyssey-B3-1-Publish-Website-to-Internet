@@ -1,0 +1,6 @@
+# 이 파일은 예제이며 Terraform이 자동으로 읽는 실제 .tfvars 파일이 아닙니다.
+# 실제 값으로 바꿔 terraform.tfvars에 저장하되 Git에 커밋하지 마세요.
+aws_account_id = "123456789012"
+ssh_cidr       = "REPLACE_WITH_YOUR_PUBLIC_IPV4/32"
+key_pair_name  = "REPLACE_WITH_EXISTING_KEY_NAME"
+name_prefix    = "b3-1-iac"

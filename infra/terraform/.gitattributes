@@ -1,0 +1,2 @@
+# Windows checkout에서도 Linux User Data의 shebang과 줄바꿈을 보존합니다.
+*.sh text eol=lf

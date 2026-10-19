@@ -1,0 +1,15 @@
+# 이 파일은 코드와 함께 보관합니다. .terraform.lock.hcl은 제외하지 않습니다.
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfplan.json
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+*.pem
+*.ppk
+.env
+.env.*
+!.env.example
